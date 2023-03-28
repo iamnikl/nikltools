@@ -7,6 +7,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+//@ts-ignore
+import { AppConfig } from "../../NiklFrameConfig.js";
 export const select = (element, multiple = false) => {
     if (element.startsWith("%nfc-") && element.endsWith("%")) {
         if (document.body.innerHTML.includes(`%nfc-${element}%`)) {
@@ -38,8 +40,9 @@ export class NiklFrame {
         this.changeVisible(true);
     }
     readFile(callback) {
+        var _a;
         return __awaiter(this, void 0, void 0, function* () {
-            if (this.url.endsWith(".html") || this.url.endsWith(".htm")) {
+            if (((_a = AppConfig === null || AppConfig === void 0 ? void 0 : AppConfig.components) === null || _a === void 0 ? void 0 : _a.fileExtention) || this.url.endsWith(".htm") || this.url.endsWith(".html")) {
                 fetch(this.url)
                     .then(data => {
                     if (data.ok) {
@@ -60,7 +63,7 @@ export class NiklFrame {
                 });
             }
             else {
-                throw new Error("Invalid File extention - Use .html or .htm for building HTML / NiklFrame Components! | NIKLFRAME");
+                throw new Error("Invalid File extention - Use .html or .htm for building NiklFrame Components!| NIKLFRAME");
             }
         });
     }
@@ -68,7 +71,6 @@ export class NiklFrame {
         document.querySelectorAll("[data-nf-click]").forEach(el => {
             el.addEventListener("click", () => {
                 //@ts-ignore
-                let func = el.getAttribute("data-nf-click")(function () { func; });
             });
         });
     }

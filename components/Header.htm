@@ -1,9 +1,12 @@
 <!-- Basic NiklFrame Component - Example | NIKLFRAME -->
 <nav>
-    <h1>Hello, {username}</h1>
+    <h1>Hello {username}</h1>
     <slot name="header-title"></slot>
+    <p>Location: 
+        <code><n-inline-js>window.location.href;</n-inline-js></code>
+    </p>
 </nav>
-<script type="module">
+<script>
     document.querySelector("body").style.backgroundColor = "black";
     document.querySelector("body").style.color = "white";
 </script>

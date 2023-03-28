@@ -1,3 +1,6 @@
+//@ts-ignore
+import { AppConfig } from "../../NiklFrameConfig.js"
+
 export const select = (element:string, multiple=false):Element | null | NodeListOf<Element>=> {
     if(element.startsWith("%nfc-") && element.endsWith("%")) {
         if(document.body.innerHTML.includes(`%nfc-${element}%`)) {
@@ -26,7 +29,7 @@ export class NiklFrame {
         this.file;
         this.target = target;
         this.visible = true;
-
+        
         if(autoReader === true) {
             this.readFile(callback)
         }
@@ -38,7 +41,7 @@ export class NiklFrame {
         this.changeVisible(true)
     }
     async readFile(callback:CallableFunction) {
-        if(this.url.endsWith(".html") || this.url.endsWith(".htm")) {
+        if(AppConfig?.components?.fileExtention || this.url.endsWith(".htm") || this.url.endsWith(".html")) {
             fetch(this.url)
             .then(data => {
                 if(data.ok) {
@@ -57,15 +60,13 @@ export class NiklFrame {
                 throw new Error(error + " | NIKLFRAME");
             })
         } else {
-            throw new Error("Invalid File extention - Use .html or .htm for building HTML / NiklFrame Components! | NIKLFRAME");
+            throw new Error("Invalid File extention - Use .html or .htm for building NiklFrame Components!| NIKLFRAME");
         }
     }
     checkForListeners() {
         document.querySelectorAll("[data-nf-click]").forEach(el => {
             el.addEventListener("click", () => {
                 //@ts-ignore
-                let func = el.getAttribute("data-nf-click")
-                (function() {func})
             })
         })
     }

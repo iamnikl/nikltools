@@ -1,10 +1,10 @@
 {
   "name": "nikltools",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Some simple tools for faster coding",
   "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "template": "git clone https://github.com/iamnikl/nikltools && cd nikltools && echo \"Powered by NiklFrame - NiklTools\" && exit 1"
   },
   "author": "Niklas P.",
   "license": "ISC",

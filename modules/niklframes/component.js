@@ -1,4 +1,6 @@
 import { NiklFrame } from "./frame.js";
+//@ts-ignore
+import { AppConfig } from "../../NiklFrameConfig.js";
 ;
 export class NiklComponent {
     constructor(componentName) {
@@ -6,10 +8,15 @@ export class NiklComponent {
         this.url = "";
         this.component;
         this.variables = [];
+        this.componentFileExt = ".htm";
     }
     import(componentName, callback) {
+        var _a;
+        if (typeof ((_a = AppConfig === null || AppConfig === void 0 ? void 0 : AppConfig.components) === null || _a === void 0 ? void 0 : _a.fileExtention) != "undefined") {
+            this.componentFileExt = AppConfig.components.fileExtention || "";
+        }
         this.name = componentName || this.name;
-        this.component = new NiklFrame(`../../../../../../../../../../../../../../../../components/${this.name}.htm`, true, undefined, () => {
+        this.component = new NiklFrame(`../../../../../../../../../../../../../../../../components/${this.name}${this.componentFileExt}`, true, undefined, () => {
             this.prepare();
             this.getTarget();
             this.globalizeScripts();
@@ -23,9 +30,16 @@ export class NiklComponent {
         // find scripts:
         this.component.file = this.component.file.replace("<script>", `<script data-nikltools-script="true" class="js-comp-${this.name}">`);
         this.component.file = this.component.file.replace('<script type="module">', `<script type="module" data-nikltools-script="true" class="js-comp-${this.name}">`);
-        this.handleSlots();
+        this.runInlineScripts();
     }
-    handleSlots() {
+    runInlineScripts() {
+        let elementName = `n-inline-js`;
+        let html = document.querySelector("html");
+        html === null || html === void 0 ? void 0 : html.querySelectorAll(elementName).forEach((inlineScript) => {
+            let result = eval(inlineScript.innerHTML) || null;
+            inlineScript.outerHTML = result;
+            inlineScript.remove();
+        });
     }
     globalizeScripts() {
         const runScript = (val) => {
@@ -85,5 +99,8 @@ export class NiklComponent {
     }
     setVariable(variable, value) {
         this.variables.push({ name: variable, value: value });
+    }
+    static status() {
+        return "Ne";
     }
 }

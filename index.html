@@ -15,7 +15,11 @@
 <body>
     <NiklComponent:Header>
         <h1 slot="header-title"></h1>
-    </NiklComponent:Header>
+    </NiklComponent:Header >
+    <NiklComponent:test>
+        <i slot="main-content-header">Hallo, schön dich zu sehen</i>
+    </NiklComponent:test>
+    <button data-nf-click="alert('Hi')">Hi</button>
     <NiklComponent:Footer />
 </body>
 <script type="module">
@@ -24,9 +28,12 @@
     let header = new NiklComponent();
     header.import("Header");
 
-    header.setVariable("username", "")
+    header.setVariable("username", "Test user")
 
     let footer = new NiklComponent()
-    footer.import("Footer")
+    footer.import("Footer");
+
+    let nikl = new NiklComponent();
+    nikl.import("test")
 </script>
 </html>

@@ -1,5 +1,5 @@
 import { NiklFrame, select } from "./frame.js";
-import { nikltools } from "../../main.js";
+import { nikltools } from "../../main";
 //@ts-ignore
 import { AppConfig } from "../../NiklFrameConfig.js"
 
